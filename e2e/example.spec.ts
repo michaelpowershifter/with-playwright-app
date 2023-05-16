@@ -14,10 +14,10 @@ test('should navigate to the about page', async ({ page }) => {
 test('should show a hidden about page element on mouse over', async ({ page }) => {
   await page.goto('/about')
 
-  const hiddenDiv = await page.getByText('I was hidden')
+  const hiddenDiv = page.getByText('I was hidden')
   await expect(hiddenDiv).not.toBeVisible()
 
-  const hideToggleDiv = await page.getByText('Hover over me')
+  const hideToggleDiv = page.getByText('Hover over me')
   await expect(hideToggleDiv).toBeVisible()
   await hideToggleDiv.hover({ force: true })
   await expect(hiddenDiv).toBeVisible()
@@ -64,6 +64,6 @@ test('should only show drop down contents after the drop down button is clicked'
 
 test('should navigate back to the home page', async ({ page }) => {
   await page.goto('/about')
-  await page.click('text=Go Back')
-  await expect(page.getByText('Get started by editing/index.js')).toHaveText('Get started by editing')
+  await page.getByText('Go Back', { exact: false }).click()
+  await expect(page.locator('p').first()).toHaveText('Get started by editing pages/index.js')
 })
